@@ -1,0 +1,307 @@
+openapi: 3.0.0
+info:
+  title: Pokemon API
+  version: 1.0.0
+  description: API pokemon
+servers:
+  - url: http://localhost:3000
+externalDocs:
+  description: Postman Collection
+  url: /docs-json
+
+paths:
+  /api/pokemons:
+    get:
+      summary: Returns the list of pokemons, with filters, sorting and pagination
+      tags:
+        - Pokemons
+      parameters:
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+            example: asc
+          description: Listing order (ascending or descending)
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            example: id
+          description: Field for sorting (id, name or type)
+        - in: query
+          name: filterBy
+          schema:
+            type: string
+            enum:
+              - fire
+              - water
+              - psychic
+              - grass
+              - electric
+              - normal
+              - flying
+              - ice
+              - rock
+              - ground
+              - poison
+            example: fire
+          description: Filter by pokemon type
+      responses:
+        '200':
+          description: Filtered pokemon list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    type:
+                      type: array
+                      items:
+                        type: string
+                      example: [string]
+        '400':
+          description: Bad input message
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                      example: 400
+                    message:
+                      type: string
+
+    post:
+      summary: Create a new pokemon.
+      tags:
+        - Pokemons
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - type
+              properties:
+                name:
+                  type: string
+                  description: Pokemon name.
+                type:
+                  type: array
+                  items:
+                    type: string
+                  example: [string]
+                  description: Pokemon type.
+      responses:
+        '201':
+          description: Pokemon created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Pikachu
+                  type:
+                    type: array
+                    items:
+                      type: string
+                    example: [electric]
+        '400':
+          description: Bad request name and type are required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+        '404':
+          description: Bad request body need a value
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+
+  /api/pokemons/{id}:
+    get:
+      summary: Returns a pokemon by ID.
+      tags:
+        - Pokemons
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: Pokemon ID.
+      responses:
+        '200':
+          description: Pokemon details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Pikachu
+                  type:
+                    type: array
+                    items:
+                      type: string
+                    example: [electric]
+        '400':
+          description: Id must be higher than zero
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+        '404':
+          description: Pokemon not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+
+    patch:
+      summary: Update a pokemon.
+      tags:
+        - Pokemons
+      parameters:
+        - in: path
+          name: id
+          example: 1
+          required: true
+          schema:
+            type: integer
+          description: ID of the pokemon to be updated.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                type:
+                  type: array
+                  example: [string]
+      responses:
+        '200':
+          description: Pokemon update successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Pikachu
+                  type:
+                    type: array
+                    items:
+                      type: string
+                      example: [electric]
+        '404':
+          description: Pokemon not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+
+    delete:
+      summary: Delete a pokemon by ID.
+      tags: [Pokemons]
+      parameters:
+        - in: path
+          name: id
+          example: 1
+          required: true
+          schema:
+            type: integer
+          description: ID of the pokemon to be deleted
+      responses:
+        '200':
+          description: Pokemon deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  type:
+                    type: array
+                    items:
+                      type: string
+                    example: [string]
+        '400':
+          description: Id must be higher than zero
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+        '404':
+          description: Pokemon not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string

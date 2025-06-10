@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "charmander",
+    "type": ["fire"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+  },
+  {
+    "id": 2,
+    "name": "blastoise",
+    "type": ["water"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"
+  },
+  {
+    "id": 3,
+    "name": "celebi",
+    "type": ["psychic", "grass"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/251.png"
+  },
+  {
+    "id": 4,
+    "name": "pikachu",
+    "type": ["electric"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+  },
+  {
+    "id": 5,
+    "name": "cyndaquil",
+    "type": ["fire"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/155.png"
+  },
+  {
+    "id": 6,
+    "name": "pidgeot",
+    "type": ["normal", "flying"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png"
+  },
+  {
+    "id": 7,
+    "name": "lapras",
+    "type": ["water", "ice"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png"
+  },
+  {
+    "id": 8,
+    "name": "geodude",
+    "type": ["rock", "ground"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png"
+  },
+  {
+    "id": 9,
+    "name": "bulbasaur",
+    "type": ["grass", "poison"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+  },
+  {
+    "id": 10,
+    "name": "arcanine",
+    "type": ["fire"],
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png"
+  }
+]

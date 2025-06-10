@@ -1,0 +1,22 @@
+networks:
+  pokemon-api:
+    name: pokemon-api
+    driver: bridge
+
+services:
+  pokemon-db:
+    image: postgres:16-alpine3.17
+    restart: always
+    env_file: .env
+    container_name: pokemon-db
+    environment:
+      POSTGRES_DB: ${PGSQL_NAME}
+      POSTGRES_PASSWORD: ${PGSQL_PASSWORD}
+      POSTGRES_USER: ${PGSQL_USER}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./src/dataBase/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - ${PGSQL_PORT}:${PGSQL_PORT}
+    networks:
+      - pokemon-api
