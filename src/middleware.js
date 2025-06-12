@@ -19,12 +19,12 @@ export const bodyExistsMiddleware = (req, res, next) => {
 };
 
 export const inputDtoMiddleware = (req, res, next) => {
-  const { name, type } = req.body;
-  if (!name && !type && req.method == 'PATCH') {
+  const { name, types } = req.body;
+  if (!name && !types && req.method == 'PATCH') {
     return res.status(400).json({ code: 400, message: "payload shouldn't empty" });
   }
-  if (req.method === 'POST' && (!name || !type)) {
-    return res.status(400).json({ code: 400, message: 'name and type are required' });
+  if (req.method === 'POST' && (!name || !types)) {
+    return res.status(400).json({ code: 400, message: 'name and types are required' });
   }
   next();
 };
@@ -40,5 +40,20 @@ export const validateQueryMiddleware = (req, res, next) => {
   if (req.query.filterBy && !Object.values(FilterByEmum).includes(filterBy)) {
     return res.status(400).json({ code: 400, message: `by must be: ${Object.values(FilterByEmum).join(' | ')}` });
   }
+  next();
+};
+
+export const formatPokemonInputMiddleware = (req, res, next) => {
+  if (req.body.name) {
+    req.body.name = req.body.name.toLowerCase();
+  }
+  if (Array.isArray(req.body.types)) {
+    req.body.types = req.body.types.map((type) => type.toLowerCase());
+  }
+  next();
+};
+
+export const validateDuplicateTypesMiddleware = (req, res, next) => {
+  req.body.types = [...new Set(req.body.types)];
   next();
 };

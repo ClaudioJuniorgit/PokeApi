@@ -7,9 +7,9 @@ export const Pokemon = new EntitySchema({
   columns: {
     id: { type: 'integer', primary: true, generated: true },
 
-    name: { type: 'varchar', length: 20 },
+    name: { type: 'varchar', unique: true, length: 20 },
 
-    types: { type: 'varchar', array: true, length: 50 },
+    types: { type: 'varchar', array: true, length: 20 },
 
     createdAt: { type: 'timestamp', name: 'created_at', default: () => 'NOW()' },
 

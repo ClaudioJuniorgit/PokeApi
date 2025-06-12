@@ -3,6 +3,8 @@ import { PokemonController } from './modules/pokemons/controller.js';
 import { PokemonRepository } from './modules/pokemons/repository.js';
 import { PokemonService } from './modules/pokemons/service.js';
 import {
+  validateDuplicateTypesMiddleware,
+  formatPokemonInputMiddleware,
   idIsNumberMiddleware,
   bodyExistsMiddleware,
   inputDtoMiddleware,
@@ -21,12 +23,16 @@ router.patch(
   idIsNumberMiddleware,
   bodyExistsMiddleware,
   inputDtoMiddleware,
+  formatPokemonInputMiddleware,
+  validateDuplicateTypesMiddleware,
   pokemonController.handleUpdate.bind(pokemonController)
 );
 router.post(
   '/pokemons',
   bodyExistsMiddleware,
   inputDtoMiddleware,
+  formatPokemonInputMiddleware,
+  validateDuplicateTypesMiddleware,
   pokemonController.handleCreate.bind(pokemonController)
 );
 router.delete('/pokemons/:id', idIsNumberMiddleware, pokemonController.handleDelete.bind(pokemonController));
