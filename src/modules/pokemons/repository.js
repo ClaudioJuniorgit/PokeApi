@@ -6,21 +6,32 @@ export class PokemonRepository {
     this.repository = AppDataSource.getRepository(Pokemon);
   }
 
-  async findMany(order, sortBy, filterBy) {
-    let data = await this.repository.find();
-    if (filterBy) {
-      data = data.filter((pokemon) => pokemon.types.includes(filterBy));
-    }
-    data.sort((a, b) => {
-      if (a[sortBy] > b[sortBy]) return order === 'desc' ? -1 : 1;
-      if (a[sortBy] < b[sortBy]) return order === 'desc' ? 1 : -1;
-      return 0;
+  async findManyCount(findManyOptions) {
+    const { page, limit, ...rest } = findManyOptions;
+    const pageNum = Number(page) || 1;
+    const limitNum = Number(limit) || 10;
+    const [pokemons, count] = await this.repository.findAndCount({
+      ...rest,
+      skip: (pageNum - 1) * limitNum,
+      take: limitNum,
     });
-    return data;
+
+    return {
+      metadata: {
+        page: pageNum,
+        limit: limitNum,
+        totalItens: count,
+        totalPages: Math.ceil(count / limitNum),
+      },
+      data: pokemons,
+    };
+  }
+
+  async findMany(findManyOptions) {
+    return await this.repository.find(findManyOptions);
   }
 
   async findOneBy(findOptionsWhere) {
-    console.log('acionou');
     return await this.repository.findOneBy(findOptionsWhere);
   }
 

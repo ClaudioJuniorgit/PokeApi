@@ -19,20 +19,21 @@ paths:
         - in: query
           name: order
           schema:
-            type: string
+            types: string
             enum: [asc, desc]
             example: asc
           description: Listing order (ascending or descending)
         - in: query
           name: sortBy
           schema:
-            type: string
+            types: string
+            enum: [id, name, types]
             example: id
-          description: Field for sorting (id, name or type)
+          description: Field for sorting (id, name or types)
         - in: query
           name: filterBy
           schema:
-            type: string
+            types: string
             enum:
               - fire
               - water
@@ -46,40 +47,40 @@ paths:
               - ground
               - poison
             example: fire
-          description: Filter by pokemon type
+          description: Filter by pokemon types
       responses:
         '200':
           description: Filtered pokemon list.
           content:
             application/json:
               schema:
-                type: array
+                types: array
                 items:
-                  type: object
+                  types: object
                   properties:
                     id:
-                      type: integer
+                      types: integer
                     name:
-                      type: string
-                    type:
-                      type: array
+                      types: string
+                    types:
+                      types: array
                       items:
-                        type: string
+                        types: string
                       example: [string]
         '400':
           description: Bad input message
           content:
             application/json:
               schema:
-                type: array
+                types: array
                 items:
-                  type: object
+                  types: object
                   properties:
                     code:
-                      type: integer
+                      types: integer
                       example: 400
                     message:
-                      type: string
+                      types: string
 
     post:
       summary: Create a new pokemon.
@@ -90,60 +91,60 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              types: object
               required:
                 - name
-                - type
+                - types
               properties:
                 name:
-                  type: string
+                  types: string
                   description: Pokemon name.
-                type:
-                  type: array
+                types:
+                  types: array
                   items:
-                    type: string
+                    types: string
                   example: [string]
-                  description: Pokemon type.
+                  description: Pokemon types.
       responses:
         '201':
           description: Pokemon created successfully.
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   name:
-                    type: string
+                    types: string
                     example: Pikachu
-                  type:
-                    type: array
+                  types:
+                    types: array
                     items:
-                      type: string
+                      types: string
                     example: [electric]
         '400':
-          description: Bad request name and type are required
+          description: Bad request name and types are required
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 400
                   message:
-                    type: string
+                    types: string
         '404':
           description: Bad request body need a value
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 404
                   message:
-                    type: string
+                    types: string
 
   /api/pokemons/{id}:
     get:
@@ -155,7 +156,7 @@ paths:
           name: id
           required: true
           schema:
-            type: integer
+            types: integer
             example: 1
           description: Pokemon ID.
       responses:
@@ -164,43 +165,43 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   id:
-                    type: integer
+                    types: integer
                     example: 1
                   name:
-                    type: string
+                    types: string
                     example: Pikachu
-                  type:
-                    type: array
+                  types:
+                    types: array
                     items:
-                      type: string
+                      types: string
                     example: [electric]
         '400':
           description: Id must be higher than zero
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 400
                   message:
-                    type: string
+                    types: string
         '404':
           description: Pokemon not found.
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 404
                   message:
-                    type: string
+                    types: string
 
     patch:
       summary: Update a pokemon.
@@ -212,19 +213,19 @@ paths:
           example: 1
           required: true
           schema:
-            type: integer
+            types: integer
           description: ID of the pokemon to be updated.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
+              types: object
               properties:
                 name:
-                  type: string
-                type:
-                  type: array
+                  types: string
+                types:
+                  types: array
                   example: [string]
       responses:
         '200':
@@ -232,28 +233,28 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   name:
-                    type: string
+                    types: string
                     example: Pikachu
-                  type:
-                    type: array
+                  types:
+                    types: array
                     items:
-                      type: string
+                      types: string
                       example: [electric]
         '404':
           description: Pokemon not found.
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 404
                   message:
-                    type: string
+                    types: string
 
     delete:
       summary: Delete a pokemon by ID.
@@ -264,7 +265,7 @@ paths:
           example: 1
           required: true
           schema:
-            type: integer
+            types: integer
           description: ID of the pokemon to be deleted
       responses:
         '200':
@@ -272,36 +273,36 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   name:
-                    type: string
-                  type:
-                    type: array
+                    types: string
+                  types:
+                    types: array
                     items:
-                      type: string
+                      types: string
                     example: [string]
         '400':
           description: Id must be higher than zero
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 400
                   message:
-                    type: string
+                    types: string
         '404':
           description: Pokemon not found.
           content:
             application/json:
               schema:
-                type: object
+                types: object
                 properties:
                   code:
-                    type: integer
+                    types: integer
                     example: 404
                   message:
-                    type: string
+                    types: string

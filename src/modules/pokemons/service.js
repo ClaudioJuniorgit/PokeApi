@@ -1,10 +1,16 @@
+import { Raw } from 'typeorm';
+
 export class PokemonService {
   constructor(pokemonRepository) {
     this.pokemonRepository = pokemonRepository;
   }
 
-  async findMany(order, sortBy, filterBy) {
-    return await this.pokemonRepository.findMany(order, sortBy, filterBy);
+  async findMany(page, limit, orderBy, sortBy, filterBy) {
+    const order = sortBy ? { [sortBy]: orderBy } : { id: 'ASC' };
+    const where = filterBy && {
+      types: Raw((alias) => `${alias} && ARRAY[:...types]::varchar[]`, { types: [filterBy] }),
+    };
+    return await this.pokemonRepository.findManyCount({ page, limit, order, where });
   }
 
   async findOneById(id) {

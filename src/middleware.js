@@ -40,6 +40,31 @@ export const validateQueryMiddleware = (req, res, next) => {
   if (req.query.filterBy && !Object.values(FilterByEmum).includes(filterBy)) {
     return res.status(400).json({ code: 400, message: `by must be: ${Object.values(FilterByEmum).join(' | ')}` });
   }
+
+  if (req.query.page) {
+    const parsedPage = Number(req.query.page);
+    const minPage = 1;
+    const maxPage = 999;
+    if (parsedPage < minPage) {
+      return res.status(400).json({ code: 400, message: `page must be higher than ${minPage}` });
+    }
+    if (parsedPage > maxPage) {
+      return res.status(400).json({ code: 400, message: `page must be lower than ${maxPage}` });
+    }
+  }
+
+  if (req.query.limit) {
+    const parsedLimit = Number(req.query.limit);
+    const minLimit = 1;
+    const maxLimit = 100;
+    if (parsedLimit < minLimit) {
+      return res.status(400).json({ code: 400, message: `limit must be higher than ${minLimit}` });
+    }
+    if (parsedLimit > maxLimit) {
+      return res.status(400).json({ code: 400, message: `limit must be lower than ${maxLimit}` });
+    }
+  }
+
   next();
 };
 

@@ -1,6 +1,6 @@
 export const OrderEnum = {
-  ASC: 'asc',
-  DESC: 'desc',
+  ASC: 'ASC',
+  DESC: 'DESC',
 };
 export const SortByEnum = {
   ID: 'id',

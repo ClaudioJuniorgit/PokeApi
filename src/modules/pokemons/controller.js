@@ -4,8 +4,8 @@ export class PokemonController {
   }
 
   async handleFind(req, res) {
-    const { order = 'asc', sortBy = 'id', filterBy } = req.query;
-    const data = await this.pokemonService.findMany(order, sortBy, filterBy);
+    const { page, limit, order, sortBy, filterBy } = req.query;
+    const data = await this.pokemonService.findMany(page, limit, order, sortBy, filterBy);
     return res.json(data);
   }
 
